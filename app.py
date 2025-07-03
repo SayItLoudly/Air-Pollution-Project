@@ -28,7 +28,9 @@ date_range = st.sidebar.slider("Select Date Range", min_value=min_date, max_valu
 # Filter data
 df_city = df[df['location'] == city]
 df_city = df_city.sort_index()
-df_city = df_city[(df_city.index >= pd.to_datetime(date_range[0])) & (df_city.index <= pd.to_datetime(date_range[1]))]
+start_date = pd.to_datetime(date_range[0])
+end_date = pd.to_datetime(date_range[1])
+df_city = df_city[(df_city.index >= start_date) & (df_city.index <= end_date)]
 
 # Resample
 df_monthly = df_city.select_dtypes(include=['number']).resample('M').mean().reset_index()
